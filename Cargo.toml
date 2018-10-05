@@ -1,0 +1,6 @@
+[package]
+name = "drum_practice"
+version = "0.1.0"
+authors = ["Ricky Nelson <rickyn@socketwiz.com>"]
+
+[dependencies]

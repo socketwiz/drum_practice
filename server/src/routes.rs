@@ -12,7 +12,7 @@ pub fn songs_all() -> Json<String> {
 }
 
 #[post("/api-v1/song", format="application/json", data="<song>")]
-pub fn song_add(song: rocket_contrib::Json<Song>) -> Json<String> {
+pub fn song_add(song: rocket_contrib::json::Json<Song>) -> Json<String> {
     match songs::add_song(&song.0) {
         Some(_) => Json(serde_json::to_string(&true).unwrap()),
         None => Json(serde_json::to_string(&false).unwrap())

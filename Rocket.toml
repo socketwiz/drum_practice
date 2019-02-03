@@ -1,0 +1,11 @@
+[development]
+db_path = "dev.db"
+
+[staging]
+db_path = "stage.db"
+session_key = "2fpUtKwzawH49mng9+l3pS0/YjDuWjFH"
+
+[production]
+db_path = "prod.db"
+session_key = "xG3X+izWV3bJ4/1hNjeMTkY5LjcvRR+K"
+

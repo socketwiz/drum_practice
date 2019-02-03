@@ -1,0 +1,22 @@
+
+/*
+ * Globals
+ */
+body {
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    padding-top: 50px;
+}
+
+.border {
+    border-style: dashed;
+    color: rgb(255, 255, 255);
+    font-size: x-large;
+}
+
+.drop-zone {
+    background: rgba(23, 136, 183, 0.64);
+    padding: 20px;
+    position: relative;
+    text-align: center;
+}

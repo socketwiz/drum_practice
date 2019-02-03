@@ -1,2 +1,9 @@
 /target
-**/*.rs.bk
+/server/**/*.rs.bk
+
+/build
+/node_modules
+/web-starter-kit-darwin-x64
+
+.DS_Store
+

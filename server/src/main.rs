@@ -16,6 +16,7 @@ mod args;
 mod database;
 
 use args::Mode;
+use rocket_contrib::serve::StaticFiles;
 
 fn main() {
     let rc = run();
@@ -46,7 +47,9 @@ fn run() -> i32 {
             println!("Initialized SQLite Database.");
         }
         Mode::Execute => {
-            rocket::ignite().mount("/", routes![routes::songs_all, routes::song_add])
+            rocket::ignite()
+                .mount("/", StaticFiles::from("./build"))
+                .mount("/", routes![routes::songs_all, routes::song_add])
                 .launch();
         }
         Mode::List => {

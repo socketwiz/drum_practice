@@ -13,7 +13,7 @@ export default class Main extends Component {
 
             <div className="container">
                 <div className="row">
-                    <div className="drum-practice-main">
+                    <div className="drum-practice-main col-xl">
                         {children}
                     </div>
                 </div>

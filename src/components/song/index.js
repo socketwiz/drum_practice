@@ -13,10 +13,10 @@ class Song extends Component {
         return (
             <div className="song-container">
                 <div className="row">
-                    <div className="col-xs-10">
+                    <div className="col-10">
                         <span className="title">{data.title}</span>
                     </div>
-                    <div className="col-xs-2">
+                    <div className="col-2">
                         <span aria-hidden="true"
                             className="glyphicon glyphicon-remove pull-right remove"
                             onClick={this.removeSong}></span>

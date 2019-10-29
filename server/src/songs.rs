@@ -23,7 +23,10 @@ impl Song {
 
 pub fn get_songs() -> Option<Vec<Song>> {
     println!("get_songs");
-    let mut connection = database::get_database_connection("dev.db".to_string()).unwrap();
+    let mut connection = match database::get_database_connection("dev.db".to_string()) {
+        Ok(value) => value,
+        Err(error) => panic!("{}", error)
+    };
 
     match database::get_songs(&mut connection) {
         Ok(q) => Some(q),
@@ -32,7 +35,10 @@ pub fn get_songs() -> Option<Vec<Song>> {
 }
 
 pub fn add_song(song: &Song) -> Option<()> {
-    let mut connection = database::get_database_connection("dev.db".to_string()).unwrap();
+    let mut connection = match database::get_database_connection("dev.db".to_string()) {
+        Ok(value) => value,
+        Err(error) => panic!("{}", error)
+    };
 
     match database::add_song(&mut connection, &song) {
         Ok(_) => Some(()),

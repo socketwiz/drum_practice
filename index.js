@@ -1,5 +1,6 @@
 
 const {app, BrowserWindow} = require('electron');
+const ffi = require('ffi');
 const path = require('path');
 const {format} = require('url');
 
@@ -28,7 +29,7 @@ function createMainWindow() {
 
   window.on('closed', () => {
     mainWindow = null;
-  })
+  });
 
   window.webContents.on('devtools-opened', () => {
     window.focus();
@@ -57,6 +58,10 @@ app.on('activate', () => {
 
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
+    var lib = ffi.Library(path.join(__dirname, '/target/release/libembed'), {
+        hello: []
+    });
+
   mainWindow = createMainWindow();
 })
 

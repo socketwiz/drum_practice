@@ -10,10 +10,11 @@ extern crate rusqlite;
 extern crate serde_derive;
 extern crate serde_json;
 
-mod songs;
-mod routes;
 mod args;
+
 mod database;
+mod routes;
+mod songs;
 
 use args::Mode;
 use rocket_contrib::serve::StaticFiles;
@@ -27,15 +28,18 @@ fn main() {
 fn run() -> i32 {
     let given_arguments: Vec<_> = std::env::args().collect();
     let parsing_results = match args::parse_args(&given_arguments) {
-        Ok(v) => v,
-        Err(s) => {println!("{}", s); return 1;}
+        Ok(value) => value,
+        Err(error) => {println!("[FATAL] {}", error); return 1;}
     };
     let mode: args::Mode = parsing_results.0;
     let database_path: String = parsing_results.1;
     let song_to_add: Option<songs::Song> = parsing_results.2;
 
     println!("Opening SQLite database at {:?}.", database_path);
-    let mut db_connection = database::get_database_connection(database_path).unwrap();
+    let mut db_connection = match database::get_database_connection(database_path) {
+        Ok(value) => value,
+        Err(error) => panic!("{}", error)
+    };
 
     match mode {
         Mode::Initialize => {
@@ -66,16 +70,20 @@ fn run() -> i32 {
             }
         }
         Mode::Add => {
-            if song_to_add.is_none() {
-                println!("[FATAL] Asked to add a nonexistant song.");
-                return 1;
-            }
-            let result = database::add_song(&mut db_connection, &song_to_add.unwrap());
-            if result.is_err() {
-                println!("[FATAL] Failed to add song. {:?}", result.err().unwrap())
+            let song = match song_to_add {
+                Some(value) => value,
+                None => panic!("[FATAL] Asked to add a nonexistant song.")
+            };
+            match database::add_song(&mut db_connection, &song) {
+                Ok(_) => (),
+                Err(error) => println!("[FATAL] Failed to add song. {:?}", error)
             }
         }
     };
     return 0
 }
 
+#[no_mangle]
+pub extern fn hello() -> &'static str {
+    "hello, world!"
+}

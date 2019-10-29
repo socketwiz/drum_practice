@@ -39,8 +39,13 @@ pub fn get_songs(connection: &mut Connection) -> Result<Vec<Song>, Error> {
     })?;
 
     let mut songs = Vec::new();
-    for song in maybe_songs_iter {
-        songs.push(song.unwrap());
+    for song_result in maybe_songs_iter {
+        let song = match song_result {
+            Ok(value) => value,
+            Err(error) => panic!("Error {}", error)
+        };
+
+        songs.push(song);
     }
 
     return Ok(songs)

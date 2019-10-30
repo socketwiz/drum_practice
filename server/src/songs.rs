@@ -13,10 +13,10 @@ pub struct Song {
 impl Song {
     pub fn new(artist: String, genre: String, path: String, title: String) -> Song {
         Song {
-            artist: artist,
-            genre: genre,
-            path: path,
-            title: title
+            artist,
+            genre,
+            path,
+            title
         }
     }
 }

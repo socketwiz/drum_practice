@@ -80,7 +80,8 @@ fn run() -> i32 {
             }
         }
     };
-    return 0
+
+    0
 }
 
 #[no_mangle]

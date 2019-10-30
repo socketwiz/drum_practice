@@ -33,7 +33,7 @@ Usage:  {0} init [path to database]
     if args.len() < 3 {
         return Err("No database path given; can't perform database operations.".into());
     } else {
-        database_path = String::from(args[2].clone());
+        database_path = args[2].clone();
     };
 
     if mode == Mode::Add {
@@ -42,7 +42,5 @@ Usage:  {0} init [path to database]
         song = None;
     }
 
-
-    return Ok((mode, database_path, song));
+    Ok((mode, database_path, song))
 }
-

@@ -1,8 +1,8 @@
-use rusqlite::{Connection, Error};
+use rusqlite::{Connection, Error, NO_PARAMS};
 use songs::Song;
 
 // SQL to create the songs table in the database
-const SQL_INIT_DATABASE: &'static str =
+const SQL_INIT_DATABASE: &str =
 " CREATE TABLE songs (
     id integer PRIMARY KEY,
     artist TEXT,
@@ -12,10 +12,10 @@ const SQL_INIT_DATABASE: &'static str =
 )";
 
 
-const SQL_INSERT_SONG: &'static str =
+const SQL_INSERT_SONG: &str =
 " INSERT INTO songs (artist, genre, path, title) VALUES (?1, ?2, ?3, ?4)";
 
-const SQL_QUERY_ALL_SONGS: &'static str =
+const SQL_QUERY_ALL_SONGS: &str =
 " SELECT * FROM songs ";
 
 pub fn get_database_connection(location: String) -> Result<Connection, Error> {
@@ -23,7 +23,7 @@ pub fn get_database_connection(location: String) -> Result<Connection, Error> {
 }
 
 pub fn initialize(connection: &mut Connection) -> Result<(), Error> {
-    connection.execute(SQL_INIT_DATABASE, &[])?;
+    connection.execute(SQL_INIT_DATABASE, NO_PARAMS)?;
     Ok(())
 }
 
@@ -34,9 +34,9 @@ pub fn add_song(connection: &mut Connection, song: &Song) -> Result<(), Error> {
 
 pub fn get_songs(connection: &mut Connection) -> Result<Vec<Song>, Error> {
     let mut statement = connection.prepare(SQL_QUERY_ALL_SONGS)?;
-    let maybe_songs_iter = statement.query_map(&[], |row| {
-        Song::new(row.get::<_, String>(1), row.get::<_, String>(2), row.get::<_, String>(3), row.get::<_, String>(4))
-    })?;
+    let maybe_songs_iter = statement.query_map(NO_PARAMS, |row| Ok(Song {
+        artist: row.get(1)?, genre: row.get(2)?, path: row.get(3)?, title: row.get(4)?
+    }))?;
 
     let mut songs = Vec::new();
     for song_result in maybe_songs_iter {
@@ -48,6 +48,6 @@ pub fn get_songs(connection: &mut Connection) -> Result<Vec<Song>, Error> {
         songs.push(song);
     }
 
-    return Ok(songs)
+    Ok(songs)
 }
 

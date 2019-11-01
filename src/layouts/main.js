@@ -11,9 +11,9 @@ export default class Main extends Component {
         return <div>
             <Header />
 
-            <div className="container">
-                <div className="row">
-                    <div className="drum-practice-main col-xl">
+            <div className="container-fluid">
+                <div>
+                    <div className="drum-practice-main">
                         {children}
                     </div>
                 </div>

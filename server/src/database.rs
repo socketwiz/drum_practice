@@ -35,7 +35,11 @@ pub fn add_song(connection: &mut Connection, song: &Song) -> Result<(), Error> {
 pub fn get_songs(connection: &mut Connection) -> Result<Vec<Song>, Error> {
     let mut statement = connection.prepare(SQL_QUERY_ALL_SONGS)?;
     let maybe_songs_iter = statement.query_map(NO_PARAMS, |row| Ok(Song {
-        artist: row.get(1)?, genre: row.get(2)?, path: row.get(3)?, title: row.get(4)?
+        id: row.get(0)?,
+        artist: row.get(1)?,
+        genre: row.get(2)?,
+        path: row.get(3)?,
+        title: row.get(4)?
     }))?;
 
     let mut songs = Vec::new();

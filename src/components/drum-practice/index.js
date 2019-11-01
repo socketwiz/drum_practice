@@ -18,9 +18,9 @@ class DrumPractice extends Component {
                     <div className="border">
                         Drag one or more audio files to this Drop Zone ...
                     </div>
-                </div>
 
                 <YoutubeForm />
+                </div>
 
                 <SongList />
             </Main>

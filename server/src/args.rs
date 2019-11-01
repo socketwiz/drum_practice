@@ -37,7 +37,7 @@ Usage:  {0} init [path to database]
     };
 
     if mode == Mode::Add {
-        song = Some(Song::new(args[3].clone(), args[4].clone(), args[5].clone(), args[6].clone()));
+        song = Some(Song::new(0, args[3].clone(), args[4].clone(), args[5].clone(), args[6].clone()));
     } else {
         song = None;
     }

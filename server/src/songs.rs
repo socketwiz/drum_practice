@@ -3,6 +3,7 @@ use database;
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Song {
+    pub id: i32,
     pub artist: String,
     pub genre: String,
     pub path: String,
@@ -11,8 +12,9 @@ pub struct Song {
 
 
 impl Song {
-    pub fn new(artist: String, genre: String, path: String, title: String) -> Song {
+    pub fn new(id: i32, artist: String, genre: String, path: String, title: String) -> Song {
         Song {
+            id,
             artist,
             genre,
             path,

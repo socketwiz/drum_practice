@@ -10,9 +10,8 @@ class YoutubeForm extends Component {
 
         return (
             <form className="youtube-form" onSubmit={onUpload}>
-                <div className="form-group">
+                <div>
                     <input type="text"
-                        className="form-control"
                         id="youtubeUrl"
                         placeholder="Or paste a youtube url here and hit enter" />
                 </div>

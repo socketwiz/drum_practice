@@ -1,4 +1,5 @@
 /target
+/server/target
 /server/**/*.rs.bk
 
 /build

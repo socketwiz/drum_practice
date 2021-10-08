@@ -29,25 +29,23 @@ fn run() -> i32 {
     let given_arguments: Vec<_> = std::env::args().collect();
     let parsing_results = match args::parse_args(&given_arguments) {
         Ok(value) => value,
-        Err(error) => {println!("[FATAL] {}", error); return 1;}
+        Err(error) => {
+            println!("[FATAL] {}", error);
+            return 1;
+        }
     };
-    let mode: args::Mode = parsing_results.0;
-    let database_path: String = parsing_results.1;
-    let song_to_add: Option<songs::Song> = parsing_results.2;
-
-    println!("Opening SQLite database at {:?}.", database_path);
-    let mut db_connection = match database::get_database_connection(database_path) {
-        Ok(value) => value,
-        Err(error) => panic!("{}", error)
-    };
+    let mode: args::Mode = parsing_results;
 
     match mode {
         Mode::Initialize => {
-            let res = database::initialize(&mut db_connection);
+            let res = database::initialize();
+
             if res.is_err() {
                 println!("[FATAL] {:?}", res);
-                return 1;
+
+                return 2;
             }
+
             println!("Initialized SQLite Database.");
         }
         Mode::Execute => {
@@ -58,34 +56,21 @@ fn run() -> i32 {
                 .launch();
         }
         Mode::List => {
-            let maybe_songs = database::get_songs(&mut db_connection);
+            let maybe_songs = database::get_songs();
             let songs_vec = match maybe_songs {
                 Ok(q) => q,
                 Err(e) => {
                     println!("[FATAL] {:?}", e);
-                    return 1;
+
+                    return 3;
                 }
             };
+
             for song in songs_vec {
                 println!("song: {} - {} - {} - {}", song.artist, song.genre, song.path, song.title);
             }
         }
-        Mode::Add => {
-            let song = match song_to_add {
-                Some(value) => value,
-                None => panic!("[FATAL] Asked to add a nonexistant song.")
-            };
-            match database::add_song(&mut db_connection, &song) {
-                Ok(_) => (),
-                Err(error) => println!("[FATAL] Failed to add song. {:?}", error)
-            }
-        }
     };
 
-    0
-}
-
-#[no_mangle]
-pub extern fn hello() -> &'static str {
-    "hello, world!"
+    0 // return 0 to the OS if all went well
 }

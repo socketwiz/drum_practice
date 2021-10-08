@@ -7,30 +7,30 @@ import SongList from '../../containers/song-list/index.js';
 import YoutubeForm from '../../containers/youtube-form/index.js';
 
 class DrumPractice extends Component {
-    render() {
-        const {onDragOver, onDrop} = this.props;
+  render() {
+    const {onDragOver, onDrop} = this.props;
 
-        return (
-            <Main>
-                <div className="drop-zone"
-                    onDragOver={onDragOver}
-                    onDrop={onDrop}>
-                    <div className="border">
-                        Drag one or more audio files to this Drop Zone ...
-                    </div>
+    return (
+      <Main>
+        <div className="drop-zone"
+             onDragOver={onDragOver}
+             onDrop={onDrop}>
+          <div className="border">
+            Drag one or more audio files to this Drop Zone ...
+          </div>
 
-                <YoutubeForm />
-                </div>
+          <YoutubeForm />
+        </div>
 
-                <SongList />
-            </Main>
-        );
-    }
+        <SongList />
+      </Main>
+    );
+  }
 }
 
 DrumPractice.propTypes = {
-    'onDragOver': PropTypes.func.isRequired,
-    'onDrop': PropTypes.func.isRequired
+  'onDragOver': PropTypes.func.isRequired,
+  'onDrop': PropTypes.func.isRequired
 };
 
 export default DrumPractice;

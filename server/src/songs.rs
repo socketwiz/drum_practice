@@ -1,9 +1,10 @@
 
 use database;
+use rusqlite::{Error};
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct Song {
-    pub id: i32,
+    pub id: Option<i32>,
     pub artist: String,
     pub genre: String,
     pub path: String,
@@ -11,40 +12,17 @@ pub struct Song {
 }
 
 
-impl Song {
-    pub fn new(id: i32, artist: String, genre: String, path: String, title: String) -> Song {
-        Song {
-            id,
-            artist,
-            genre,
-            path,
-            title
-        }
+pub fn get_songs() -> Result<Vec<Song>, Error> {
+    match database::get_songs() {
+        Ok(query) => Ok(query),
+        Err(error) => Err(error.into())
     }
 }
 
-pub fn get_songs() -> Option<Vec<Song>> {
-    println!("get_songs");
-    let mut connection = match database::get_database_connection("dev.db".to_string()) {
-        Ok(value) => value,
-        Err(error) => panic!("{}", error)
-    };
-
-    match database::get_songs(&mut connection) {
-        Ok(q) => Some(q),
-        Err(_) => None
-    }
-}
-
-pub fn add_song(song: &Song) -> Option<()> {
-    let mut connection = match database::get_database_connection("dev.db".to_string()) {
-        Ok(value) => value,
-        Err(error) => panic!("{}", error)
-    };
-
-    match database::add_song(&mut connection, &song) {
-        Ok(_) => Some(()),
-        Err(_) => None
+pub fn add_song(song: &Song) -> Result<usize, Error> {
+    match database::add_song(&song) {
+        Ok(added) => Ok(added),
+        Err(error) => Err(error.into())
     }
 }
 

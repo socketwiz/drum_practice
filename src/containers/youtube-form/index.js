@@ -1,30 +1,39 @@
 
 import {checkStatus, fetchJSON} from '../../base';
 import {connect} from 'react-redux';
-import forEach from 'lodash/forEach';
 import {getSongs} from '../../base';
-import 'whatwg-fetch';
 import {withRouter} from 'react-router';
+import forEach from 'lodash/forEach';
 import YoutubeForm from '../../components/youtube-form';
 
 function onUpload(event, dispatch) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const element = event.currentTarget;
+  const element = event.currentTarget;
+  const payload = {
+    artist: '',
+    genre: '',
+    path: '',
+    title: ''
+  };
 
-    let url = '';
+  forEach(element.getElementsByTagName('input'), element => {
+    payload.path = element.value;
+  });
 
-    forEach(element.getElementsByTagName('input'), element => {
-        url = element.value;
+  fetch('/api-v1/song', {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify(payload)
+  })
+    .then(checkStatus)
+    .then(fetchJSON)
+    .then(data => getSongs(dispatch))
+    .catch(error => {
+      console.error(error);
     });
-
-    fetch('/api-v1/upload-youtube', {'method': 'POST', 'body': url})
-        .then(checkStatus)
-        .then(fetchJSON)
-        .then(data => getSongs(dispatch))
-        .catch(error => {
-            console.error(error);
-        });
 }
 
 const mapStateToProps = state => {

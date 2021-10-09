@@ -50,7 +50,7 @@ fn run() -> i32 {
         }
         Mode::Execute => {
             rocket::ignite()
-                .mount("/", StaticFiles::from("./build"))
+                .mount("/", StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/static")))
                 .mount("/", routes![routes::songs_all, routes::song_add])
                 .register(catchers![routes::not_found])
                 .launch();

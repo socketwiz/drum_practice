@@ -1,0 +1,20 @@
+{
+  "name": "tailwind",
+  "version": "1.0.0",
+  "description": "project CSS",
+  "main": "postcss.config.js",
+  "scripts": {
+    "build": "tailwindcss --postcss -i ./styles/main.css -o ../server/static/css/main.css",
+    "build:watch": "npm run build -- --watch",
+    "start": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ricky Nelson <rickyn@socketwiz.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@tailwindcss/forms": "^0.3.3",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.2.7"
+  },
+  "private": true
+}

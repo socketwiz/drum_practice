@@ -1,11 +1,8 @@
-/target
-/server/target
-/server/**/*.rs.bk
+target/
+server/**/*.rs.bk
+server/static/css/
+server/static/js/
 
-/build
-/node_modules
-/web-starter-kit-darwin-x64
+node_modules/
 
 .DS_Store
-
-dev.db

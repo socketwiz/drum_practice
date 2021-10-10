@@ -1,0 +1,4 @@
+
+* drum_practice
+
+An application to manage playing songs back for a drum practice session.

@@ -10,19 +10,12 @@ import {
   PencilIcon
 } from '@heroicons/react/solid';
 
-const candidates = [
-  {
-    name: 'Emily Selman',
-    email: 'emilyselman@example.com',
-    imageUrl:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    applied: 'January 7, 2020',
-    appliedDatetime: '2020-07-01T15:34:56',
-    status: 'Completed phone screening',
-  }
-];
+import UseAjax from '../components/use-ajax';
 
 function SongsList() {
+  const { data, error, state } = UseAjax('/api-v1/songs/');
+  const songs = data?.response ?? [];
+  console.log(songs);
   return (
     <div className="relative min-h-screen bg-white">
       {/* Page heading */}
@@ -68,37 +61,22 @@ function SongsList() {
 
           {/* Stacked list */}
           <ul role="list" className="mt-5 border-t border-gray-200 divide-y divide-gray-200 sm:mt-0 sm:border-t-0">
-            {candidates.map((candidate) => (
-              <li key={candidate.email}>
-                <a href="#" className="group block">
+            {songs.map((song) => (
+              <li key={song.id}>
+                <a href={song.path} className="group block">
                   <div className="flex items-center py-5 px-4 sm:py-6 sm:px-0">
                     <div className="min-w-0 flex-1 flex items-center">
-                      <div className="flex-shrink-0">
-                        <img
-                          className="h-12 w-12 rounded-full group-hover:opacity-75"
-                          src={candidate.imageUrl}
-                          alt=""
-                        />
-                      </div>
                       <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                         <div>
-                          <p className="text-sm font-medium text-purple-600 truncate">{candidate.name}</p>
+                          <p className="text-sm font-medium text-purple-600 truncate">{song.artist}</p>
                           <p className="mt-2 flex items-center text-sm text-gray-500">
-                            <MailIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                            <span className="truncate">{candidate.email}</span>
+                            <span className="truncate">{song.genre}</span>
                           </p>
                         </div>
                         <div className="hidden md:block">
                           <div>
                             <p className="text-sm text-gray-900">
-                              Applied on <time dateTime={candidate.appliedDatetime}>{candidate.applied}</time>
-                            </p>
-                            <p className="mt-2 flex items-center text-sm text-gray-500">
-                              <CheckCircleIcon
-                                className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
-                                aria-hidden="true"
-                              />
-                              {candidate.status}
+                              {song.title}title
                             </p>
                           </div>
                         </div>

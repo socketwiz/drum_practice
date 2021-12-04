@@ -12,22 +12,22 @@ then
     tmux new-window -t drum_practice:5 -n Zsh
 
     # run the server in the first window
-    tmux send-keys -t drum_practice:0.0 'cd ~/dev/rust/drum_practice && cargo run exec' C-m
+    tmux send-keys -t drum_practice:0.0 'cd ~/dev/rust/drum_practice/ && cargo run exec' C-m
 
     # run the client in the second window
-    tmux send-keys -t drum_practice:1.0 'cd ~/dev/rust/drum_practice && npm start' C-m
+    tmux send-keys -t drum_practice:1.0 'cd ~/dev/rust/drum_practice/frontend/ && npm run dev' C-m
 
     # run the client tests in the third window
-    tmux send-keys -t drum_practice:2.0 'cd ~/dev/rust/drum_practice && npm run test:client' C-m
+    tmux send-keys -t drum_practice:2.0 'cd ~/dev/rust/drum_practice/frontend/ && npm run test:client' C-m
 
     # run the server tests in the fourth window
-    tmux send-keys -t drum_practice:3.0 'cd ~/dev/rust/drum_practice && npm run test:server' C-m
+    tmux send-keys -t drum_practice:3.0 'cd ~/dev/rust/drum_practice/ && npm run test:server' C-m
 
     # just get to the proper path for the editor
-    tmux send-keys -t drum_practice:4.0 'cd ~/dev/rust/drum_practice' C-m
+    tmux send-keys -t drum_practice:4.0 'cd ~/dev/rust/drum_practice/' C-m
 
     # just get to the proper path in the last window
-    tmux send-keys -t drum_practice:5.0 'cd ~/dev/rust/drum_practice' C-m
+    tmux send-keys -t drum_practice:5.0 'cd ~/dev/rust/drum_practice/' C-m
 
     # select the server window and pane
     tmux select-window -t drum_practice:0.0
